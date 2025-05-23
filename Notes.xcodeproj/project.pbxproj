@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CE9F5F5B2DE0683700A12E66 /* NotesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9F5F5A2DE0683300A12E66 /* NotesApp.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		CE6D06D62DDF6CAD0013788F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		CE6D06C12DDF6CAB0013788F /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE6D06D52DDF6CAD0013788F /* NotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE6D06DF2DDF6CAD0013788F /* NotesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE9F5F5A2DE0683300A12E66 /* NotesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -56,6 +61,26 @@
 		CE6D06E22DDF6CAD0013788F /* NotesUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = NotesUITests;
+			sourceTree = "<group>";
+		};
+		CE9F5F3B2DE0643000A12E66 /* Models */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CE9F5F3F2DE0644300A12E66 /* ViewModels */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		CE9F5F432DE0646700A12E66 /* Views */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CE9F5F502DE064A300A12E66 /* Utilities */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -88,6 +113,11 @@
 		CE6D06B82DDF6CAB0013788F = {
 			isa = PBXGroup;
 			children = (
+				CE9F5F5A2DE0683300A12E66 /* NotesApp.swift */,
+				CE9F5F502DE064A300A12E66 /* Utilities */,
+				CE9F5F432DE0646700A12E66 /* Views */,
+				CE9F5F3F2DE0644300A12E66 /* ViewModels */,
+				CE9F5F3B2DE0643000A12E66 /* Models */,
 				CE6D06C32DDF6CAB0013788F /* Notes */,
 				CE6D06D82DDF6CAD0013788F /* NotesTests */,
 				CE6D06E22DDF6CAD0013788F /* NotesUITests */,
@@ -122,6 +152,10 @@
 			);
 			fileSystemSynchronizedGroups = (
 				CE6D06C32DDF6CAB0013788F /* Notes */,
+				CE9F5F3B2DE0643000A12E66 /* Models */,
+				CE9F5F3F2DE0644300A12E66 /* ViewModels */,
+				CE9F5F432DE0646700A12E66 /* Views */,
+				CE9F5F502DE064A300A12E66 /* Utilities */,
 			);
 			name = Notes;
 			packageProductDependencies = (
@@ -249,6 +283,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE9F5F5B2DE0683700A12E66 /* NotesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
