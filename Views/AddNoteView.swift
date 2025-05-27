@@ -2,7 +2,7 @@
 //  Notes
 //
 //  Created by Abbas on 23/05/2025.
-
+/*
 import SwiftUI
 
 struct AddNoteView: View {
@@ -74,3 +74,4 @@ struct AddNoteView: View {
     }
 }
 
+*/

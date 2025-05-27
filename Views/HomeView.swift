@@ -5,14 +5,30 @@
 
 import SwiftUI
 
+// MARK: - Note Model
+struct Note: Identifiable {
+    let id = UUID()
+    let title: String
+    let content: String
+    let date: Date
+    let tags: [String]
+}
+
+// MARK: - Home View
 struct HomeView: View {
     @State private var isMenuOpen = false
     @State private var selectedMenu: String = "Notes"
     @State private var selectedTag: String = "All"
     
+    @State private var notes: [Note] = [
+        Note(title: "Grocery List", content: "Buy milk, eggs, bread", date: Date(), tags: ["Personal"]),
+        Note(title: "Project Plan", content: "Outline sprint tasks", date: Date(), tags: ["Work"]),
+        Note(title: "App Idea", content: "Habit tracker for students", date: Date(), tags: ["Ideas"]),
+        Note(title: "Reminder", content: "Submit tax documents", date: Date(), tags: ["Urgent"]),
+    ]
     
-    let tags = ["All", "Work", "Personal", "Ideas", "Urgent"] // Example tags
-
+    let tags = ["All", "Work", "Personal", "Ideas", "Urgent"]
+    
     var body: some View {
         ZStack(alignment: .leading) {
             // Main Content
@@ -29,17 +45,17 @@ struct HomeView: View {
                             Image(systemName: "line.3.horizontal")
                                 .imageScale(.large)
                         }
-
+                        
                         Spacer()
-
+                        
                         // Center Title
-                        Text("Notes writing")
+                        Text("Notes")
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .multilineTextAlignment(.center)
-
+                        
                         Spacer()
-
+                        
                         // Settings Button
                         Button(action: {
                             // TODO: Open settings
@@ -50,6 +66,7 @@ struct HomeView: View {
                     }
                     .padding()
                     
+                    // Tag Bar
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 12) {
                             ForEach(tags, id: \.self) { tag in
@@ -68,23 +85,37 @@ struct HomeView: View {
                         }
                         .padding(.horizontal)
                         .padding(.vertical, 10)
-                        
                     }
                     
-                    Spacer()
-
-                    // Placeholder
-                    Text("Your notes will appear here")
-                        .foregroundColor(.gray)
-                    
+                    // Notes List
+                    ScrollView {
+                        LazyVStack(spacing: 12) {
+                            ForEach(filteredNotes) { note in
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(note.title)
+                                        .font(.headline)
+                                    Text(note.content)
+                                        .font(.subheadline)
+                                        .lineLimit(2)
+                                        .foregroundColor(.secondary)
+                                    Text(note.date, style: .date)
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
+                                }
+                                .padding()
+                                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.secondarySystemBackground)))
+                                .padding(.horizontal)
+                            }
+                        }
+                        .padding(.bottom, 80) // Leave space for floating button
+                    }
                     .background(Color(.systemBackground))
-
                 }
                 .navigationBarHidden(true)
             }
             .disabled(isMenuOpen)
-
-            // Dimmed background
+            
+            // Dim Background When Menu Is Open
             if isMenuOpen {
                 Color.black.opacity(0.3)
                     .edgesIgnoringSafeArea(.all)
@@ -94,22 +125,57 @@ struct HomeView: View {
                         }
                     }
             }
-
-            // Slide-in Side Menu
+            
+            // Slide-in Menu
             SideMenu(selectedMenu: $selectedMenu, isOpen: $isMenuOpen)
-                .offset(x: isMenuOpen ? 0 : -250) // Slide in/out from the left
+                .offset(x: isMenuOpen ? 0 : -250)
                 .animation(.easeInOut, value: isMenuOpen)
+            
+            // Floating Add Button
+            VStack {
+                Spacer()
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            // TODO: Open New Note View
+                        }) {
+                            Text("New Note")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 24)
+                                .padding(.vertical, 14)
+                                .background(Color.red)
+                                .cornerRadius(14)
+                                .shadow(radius: 4)
+                        }
+                        .padding()
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Filtered Notes Computed Property
+    var filteredNotes: [Note] {
+        if selectedTag == "All" {
+            return notes
+        } else {
+            return notes.filter { $0.tags.contains(selectedTag) }
         }
     }
 }
+
+// MARK: - Side Menu View
 struct SideMenu: View {
     @Binding var selectedMenu: String
     @Binding var isOpen: Bool
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Spacer().frame(height: 100)
-
+            
             // Notes Button
             Button(action: {
                 selectedMenu = "Notes"
@@ -126,7 +192,7 @@ struct SideMenu: View {
                 }
                 .padding(.horizontal)
             }
-
+            
             // Tags Button
             Button(action: {
                 selectedMenu = "Tags"
@@ -143,7 +209,7 @@ struct SideMenu: View {
                 }
                 .padding(.horizontal)
             }
-
+            
             Spacer()
         }
         .frame(width: 250)

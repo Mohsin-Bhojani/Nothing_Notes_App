@@ -2,7 +2,7 @@
 //  Notes
 //
 //  Created by Abbas on 23/05/2025.
-
+/*
 import Foundation
 import SwiftUI
 // import CoreData // Uncomment when ready to use Core Data
@@ -55,7 +55,6 @@ class NotesViewModel: ObservableObject {
 
     // MARK: - Core Data (Commented Out)
     
-    /*
     let container: NSPersistentContainer
 
     init() {
@@ -120,4 +119,3 @@ class NotesViewModel: ObservableObject {
         }
     }
     */
-}

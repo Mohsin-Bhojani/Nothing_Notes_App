@@ -2,7 +2,7 @@
 //  Notes
 //
 //  Created by Abbas on 23/05/2025.
-
+/*
 import Foundation
 import UIKit
 
@@ -20,3 +20,4 @@ struct Note: Identifiable, Codable {
         return UIImage(data: data)
     }
 }
+*/

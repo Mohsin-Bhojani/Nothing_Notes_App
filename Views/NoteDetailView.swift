@@ -2,11 +2,11 @@
 //  Notes
 //
 //  Created by Abbas on 23/05/2025.
-
+/*
 import SwiftUI
 
 struct NoteDetailView: View {
-    let note: Note
+    let note: Notes
     @ObservedObject var viewModel: NotesViewModel
 
     var body: some View {
@@ -52,3 +52,4 @@ struct NoteDetailView: View {
     }
 }
 
+*/
