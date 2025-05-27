@@ -29,6 +29,15 @@ struct HomeView: View {
     
     let tags = ["All", "Work", "Personal", "Ideas", "Urgent"]
     
+    // MARK: - Filtered Notes Computed Property
+    var filteredNotes: [Note] {
+        if selectedTag == "All" {
+            return notes
+        } else {
+            return notes.filter { $0.tags.contains(selectedTag) }
+        }
+    }
+    
     var body: some View {
         ZStack(alignment: .leading) {
             // Main Content
@@ -36,7 +45,6 @@ struct HomeView: View {
                 VStack {
                     // Top Bar
                     HStack {
-                        // Menu Button
                         Button(action: {
                             withAnimation(.easeInOut) {
                                 isMenuOpen.toggle()
@@ -48,7 +56,6 @@ struct HomeView: View {
                         
                         Spacer()
                         
-                        // Center Title
                         Text("Notes")
                             .font(.headline)
                             .frame(maxWidth: .infinity)
@@ -56,7 +63,6 @@ struct HomeView: View {
                         
                         Spacer()
                         
-                        // Settings Button
                         Button(action: {
                             // TODO: Open settings
                         }) {
@@ -103,10 +109,11 @@ struct HomeView: View {
                                         .foregroundColor(.gray)
                                 }
                                 .padding()
+                                .frame(maxWidth: .infinity, alignment: .leading) // ← important
                                 .background(RoundedRectangle(cornerRadius: 12).fill(Color(.secondarySystemBackground)))
-                                .padding(.horizontal)
                             }
                         }
+                        .padding(.horizontal)
                         .padding(.bottom, 80) // Leave space for floating button
                     }
                     .background(Color(.systemBackground))
@@ -134,35 +141,23 @@ struct HomeView: View {
             // Floating Add Button
             VStack {
                 Spacer()
-                VStack {
+                HStack {
                     Spacer()
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            // TODO: Open New Note View
-                        }) {
-                            Text("New Note")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 24)
-                                .padding(.vertical, 14)
-                                .background(Color.red)
-                                .cornerRadius(14)
-                                .shadow(radius: 4)
-                        }
-                        .padding()
+                    Button(action: {
+                        // TODO: Open New Note View
+                    }) {
+                        Text("New Note")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 14)
+                            .background(Color.red)
+                            .cornerRadius(14)
+                            .shadow(radius: 4)
                     }
+                    .padding()
                 }
             }
-        }
-    }
-    
-    // MARK: - Filtered Notes Computed Property
-    var filteredNotes: [Note] {
-        if selectedTag == "All" {
-            return notes
-        } else {
-            return notes.filter { $0.tags.contains(selectedTag) }
         }
     }
 }
@@ -176,7 +171,6 @@ struct SideMenu: View {
         VStack(alignment: .leading, spacing: 20) {
             Spacer().frame(height: 100)
             
-            // Notes Button
             Button(action: {
                 selectedMenu = "Notes"
                 withAnimation {
@@ -193,7 +187,6 @@ struct SideMenu: View {
                 .padding(.horizontal)
             }
             
-            // Tags Button
             Button(action: {
                 selectedMenu = "Tags"
                 withAnimation {
@@ -217,4 +210,8 @@ struct SideMenu: View {
         .edgesIgnoringSafeArea(.vertical)
         .shadow(radius: 5)
     }
+}
+
+#Preview {
+    HomeView()
 }
