@@ -8,9 +8,15 @@ import SwiftUI
 
 @main
 struct NotesApp: App {
+    @StateObject private var colorSchemeManager = ColorSchemeManager()
+
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .environmentObject(colorSchemeManager)
+                .preferredColorScheme(colorSchemeManager.isDarkMode ? .dark : .light)
+                .accentColor(.red)
         }
     }
 }
+

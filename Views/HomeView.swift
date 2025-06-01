@@ -3,7 +3,6 @@
 //
 //  Created by Abbas on 26/05/2025.
 
-
 import SwiftUI
 
 struct HomeView: View {
@@ -11,8 +10,6 @@ struct HomeView: View {
     @State private var selectedMenu: String = "Notes"
     @State private var selectedTag: String = "All"
     @State private var isShowingNewNoteView = false
-    //@State private var isPresentingNewNote 
-
 
     @State private var notes: [Note] = [
         Note(title: "Grocery List", content: "Buy milk, eggs, bread", date: Date(), tags: ["Personal"]),
@@ -21,7 +18,8 @@ struct HomeView: View {
         Note(title: "Reminder", content: "Submit tax documents", date: Date(), tags: ["Urgent"]),
     ]
 
-    let tags = ["All", "Work", "Personal", "Ideas", "Urgent"]
+    @State private var tags = ["All", "Work", "Personal", "Ideas", "Urgent"]
+
 
     var filteredNotes: [Note] {
         selectedTag == "All" ? notes : notes.filter { $0.tags.contains(selectedTag) }
@@ -42,7 +40,7 @@ struct HomeView: View {
 
                         Spacer()
 
-                        Text("Notes")
+                        Text(selectedMenu)
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .multilineTextAlignment(.center)
@@ -58,25 +56,30 @@ struct HomeView: View {
                     }
                     .padding()
 
-                    // Tag Filter Bar
-                    TagFilterBar(tags: tags, selectedTag: $selectedTag)
+                    if selectedMenu == "Notes" {
+                        // Tag Filter Bar
+                        TagFilterBar(tags: tags, selectedTag: $selectedTag)
 
-                    // Notes List
-                    ScrollView {
-                        LazyVStack(spacing: 12) {
-                            ForEach(filteredNotes) { note in
-                                NoteTile(note: note)
+                        // Notes List
+                        ScrollView {
+                            LazyVStack(spacing: 12) {
+                                ForEach(filteredNotes) { note in
+                                    NoteTile(note: note)
+                                }
                             }
+                            .padding(.horizontal)
+                            .padding(.bottom, 80)
                         }
-                        .padding(.horizontal)
-                        .padding(.bottom, 80)
+
+                    } else if selectedMenu == "Tags" {
+                        TagsView(allTags: $tags) // Pass the full binding, not filtered
                     }
-                    .background(Color(.systemBackground))
                 }
                 .navigationBarHidden(true)
             }
             .disabled(isMenuOpen)
 
+            // Dim background when menu is open
             if isMenuOpen {
                 Color.black.opacity(0.3)
                     .edgesIgnoringSafeArea(.all)
@@ -85,30 +88,34 @@ struct HomeView: View {
                     }
             }
 
+            // Slide-out menu
             SideMenu(selectedMenu: $selectedMenu, isOpen: $isMenuOpen)
                 .offset(x: isMenuOpen ? 0 : -250)
                 .animation(.easeInOut, value: isMenuOpen)
 
-            VStack {
-                Spacer()
-                HStack {
+            // Floating button for new notes
+            if selectedMenu == "Notes" {
+                VStack {
                     Spacer()
-                    Button(action: {
-                        isShowingNewNoteView = true
-                    }) {
-                        Text("New Note")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 24)
-                            .padding(.vertical, 14)
-                            .background(Color.red)
-                            .cornerRadius(14)
-                            .shadow(radius: 4)
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            isShowingNewNoteView = true
+                        }) {
+                            Text("New Note")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 24)
+                                .padding(.vertical, 14)
+                                .background(Color.red)
+                                .cornerRadius(14)
+                                .shadow(radius: 4)
+                        }
+                        .sheet(isPresented: $isShowingNewNoteView) {
+                            NewNoteView(notes: $notes)
+                        }
+                        .padding()
                     }
-                    .sheet(isPresented: $isShowingNewNoteView) {
-                        NewNoteView(notes: $notes)
-                    }
-                    .padding()
                 }
             }
         }

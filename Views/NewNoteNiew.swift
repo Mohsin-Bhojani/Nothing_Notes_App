@@ -74,7 +74,7 @@ struct NewNoteView: View {
                         Button(action: {
                             isTagPickerPresented = true
                         }) {
-                            Label("Add New Tag", systemImage: "tag")
+                            Label("Add", systemImage: "plus")
                                 .padding(.vertical, 6)
                                 .padding(.horizontal, 12)
                                 .background(Capsule().fill(Color(.secondarySystemBackground)))

@@ -20,7 +20,7 @@ struct TagFilterBar: View {
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(selectedTag == tag ? Color.accentColor : Color(.secondarySystemBackground))
                         )
-                        .foregroundColor(selectedTag == tag ? .white : .primary)
+                        .foregroundColor(selectedTag == tag ? .white: .primary)
                         .onTapGesture {
                             selectedTag = tag
                         }
